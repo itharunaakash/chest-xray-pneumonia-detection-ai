@@ -165,6 +165,7 @@ python scripts/cross-operator_validation.py
 ***
 
 ## 🚀 **API for Developers**
+**🔗 [Try API](https://pneumodetect-api.onrender.com/)**
 
 ![FastAPI Demo](api/api_demo.gif)
 *Powerful API workflow: Send Request → Get JSON Response → Process Results*
