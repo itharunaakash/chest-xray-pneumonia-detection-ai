@@ -1,7 +1,6 @@
 """
 FastAPI Server for Pediatric Chest X-Ray Pneumonia Detection
 
-86% Cross-Operator Validation Accuracy | 96.4% Sensitivity | Clinical Grade AI
 """
 
 from fastapi import FastAPI, File, UploadFile, HTTPException
@@ -34,11 +33,11 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",  # React dev server
+        "http://localhost:3000", 
         "http://127.0.0.1:3000",
-        "https://*.vercel.app",  # Vercel deployments
-        "https://*.netlify.app",  # Netlify deployments
-        "https://*.onrender.com",  # Render deployments
+        "https://*.vercel.app", 
+        "https://*.netlify.app",  
+        "https://*.onrender.com", 
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -66,13 +65,13 @@ async def load_model():
     """Load the trained model on startup"""
     global model, model_info
     try:
-        # Define possible model paths - FIXED ORDER for HuggingFace
+        
         model_paths = [
-            Path("../models/best_chest_xray_model.h5"),  # CORRECT path for your structure
+            Path("../models/best_chest_xray_model.h5"), 
             Path("models/best_chest_xray_model.h5"),
             Path("./best_chest_xray_model.h5")
         ]
-        # Try to find and load the model
+       
         for model_path in model_paths:
             if model_path.exists():
                 logger.info(f"Loading model from: {model_path}")
@@ -115,7 +114,7 @@ def interpret_prediction(prediction_score: float) -> dict:
     Interpret model prediction with confidence levels
     Based on cross-operator validation performance metrics
     """
-    # Your model uses 0.5 as threshold (>0.5 = pneumonia, <=0.5 = normal)
+    #  model uses 0.5 as threshold (>0.5 = pneumonia, <=0.5 = normal)
     if prediction_score > 0.5:
         diagnosis = "PNEUMONIA"
         confidence = float(prediction_score * 100)
@@ -318,10 +317,10 @@ async def internal_error_handler(request, exc):
     )
 
 if __name__ == "__main__":
-    # FIXED: For local development and HuggingFace deployment
+   
     uvicorn.run(
-        "api.main:app",  # CHANGED: Since file is in api/ folder
+        "api.main:app", 
         host="0.0.0.0",
-        port=int(os.environ.get("PORT", 7860)),  # CHANGED: HuggingFace uses port 7860
-        reload=False  # CHANGED: Turn off reload for production deployment
+        port=int(os.environ.get("PORT", 7860)),  
+        reload=False  
     )
